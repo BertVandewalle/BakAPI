@@ -69,7 +69,7 @@ namespace WebApplication1.Migrations
                     b.HasOne("WebApplication1.Data.Country", "Country")
                         .WithMany()
                         .HasForeignKey("CountryId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Country");

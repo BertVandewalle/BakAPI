@@ -22,5 +22,9 @@ namespace WebApplication1.Models
         public int Id { get; set; }
         public IList<HotelDTO> Hotels { get; set; }
     }
+    public class UpdateCountryDTO : CreateCountryDTO
+    {
+        public IList<CreateHotelDTO> Hotels { get; set; }
+    }
 }
 

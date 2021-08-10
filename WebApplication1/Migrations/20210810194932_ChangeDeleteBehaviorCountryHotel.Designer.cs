@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebApplication1.Data;
 
 namespace WebApplication1.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20210810194932_ChangeDeleteBehaviorCountryHotel")]
+    partial class ChangeDeleteBehaviorCountryHotel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -48,15 +50,15 @@ namespace WebApplication1.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "1c76a468-0086-416a-972c-23de57df5b86",
-                            ConcurrencyStamp = "689b3a10-8386-409e-87f9-1a02c124de35",
+                            Id = "81aa1ece-7bae-47d6-99cf-d22f5deace42",
+                            ConcurrencyStamp = "75878102-c06e-496d-ae3e-22032d4c1c40",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "961e8dc0-9071-465f-ad52-e118e3af46dc",
-                            ConcurrencyStamp = "195a9517-4b03-4b82-8884-298b1c1920c4",
+                            Id = "6e1abf57-ce3f-4ba2-acd3-949ae7009063",
+                            ConcurrencyStamp = "41dee924-5394-4696-a1b1-aac6533ed1a5",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         });
@@ -383,7 +385,7 @@ namespace WebApplication1.Migrations
                     b.HasOne("WebApplication1.Data.Country", "Country")
                         .WithMany("Hotels")
                         .HasForeignKey("CountryId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Country");
