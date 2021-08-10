@@ -6,6 +6,8 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using WebApplication1.Data;
 using WebApplication1.IRepository;
+using WebApplication1.Models;
+using X.PagedList;
 
 namespace WebApplication1.Repository
 {
@@ -67,7 +69,21 @@ namespace WebApplication1.Repository
 
             return await query.AsNoTracking().ToListAsync();
         }
-    
+
+        public async Task<IPagedList<T>> GetPaged(RequestParams requestParams,List<string> includes = null)
+        {
+            IQueryable<T> query = _db;
+
+            if (includes != null)
+            {
+                foreach (var includeProperty in includes)
+                {
+                    query = query.Include(includeProperty);
+                }
+            }
+            return await query.AsNoTracking().ToPagedListAsync(requestParams.PageNumber,requestParams.PageSize);
+        }
+
         public async Task Insert(T entity)
         {
             await _db.AddAsync(entity);

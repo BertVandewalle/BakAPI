@@ -27,13 +27,14 @@ namespace WebApplication1.Controllers
             _mapper = mapper;
         }
         [HttpGet]
+        [ResponseCache(Duration = 60)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> GetCountries()
+        public async Task<IActionResult> GetCountries([FromQuery] RequestParams requestParams)
         {
             try
             {
-                var countries = await _unitOfWork.Countries.GetAll();
+                var countries = await _unitOfWork.Countries.GetPaged(requestParams);
                 var results = _mapper.Map<IList<CountryDTO>>(countries);
                 return Ok(results); 
             }
@@ -48,17 +49,11 @@ namespace WebApplication1.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetCountry(int id)
         {
-            try
-            {
-                var country = await _unitOfWork.Countries.Get(q=>q.Id==id,new List<string> { "Hotels" });
-                var results = _mapper.Map<CountryDTO>(country);
-                return Ok(results);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, $"Something Went Wrong in the {nameof(GetCountry)}");
-                return StatusCode(500, "Internal Server Error. Please try again later");
-            }
+           
+            var country = await _unitOfWork.Countries.Get(q=>q.Id==id,new List<string> { "Hotels" });
+            var results = _mapper.Map<CountryDTO>(country);
+            return Ok(results);
+            
         }
         //[Authorize(Roles = "Administrator")]
         [HttpPost]

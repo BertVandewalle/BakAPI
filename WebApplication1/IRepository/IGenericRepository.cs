@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using WebApplication1.Models;
+using X.PagedList;
 
 namespace WebApplication1.IRepository
 {
@@ -13,6 +15,8 @@ namespace WebApplication1.IRepository
             Func<IQueryable<T>, IOrderedQueryable<T>> ordeBy = null,
             List<string> includes = null
             );
+        Task<IPagedList<T>> GetPaged(RequestParams requestParams, List<string> includes = null);
+
         Task<T> Get(Expression<Func<T, bool>> expression, List<string> includes = null);
         Task Insert(T entity);
         Task InsertRange(IEnumerable<T> entities);
