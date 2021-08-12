@@ -3,10 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using WebApplication1.Data;
-using WebApplication1.Models;
+using BakAPI.Data;
+using BakAPI.Models;
 
-namespace WebApplication1.Configurations
+namespace BakAPI.Configurations
 {
     public class MapperInitializer : Profile
     {
@@ -19,6 +19,14 @@ namespace WebApplication1.Configurations
             CreateMap<Hotel, CreateHotelDTO>().ReverseMap();
             CreateMap<Hotel, UpdateHotelDTO>().ReverseMap();
             CreateMap<ApiUser, UserDTO>().ReverseMap();
+            CreateMap<Player, PlayerDTO>().ReverseMap();
+            CreateMap<Player, CreatePlayerDTO>().ReverseMap();
+            CreateMap<Game, GameDTO>().ReverseMap();
+            CreateMap<Game, CreateGameDTO>().ReverseMap();
+            CreateMap<GamePlayer, GamePlayerDTO>().ReverseMap();
+            CreateMap<GamePlayer, CreateGamePlayerDTO>().ReverseMap();
+
+
             //CreateMap<ApiUser, LoginUserDTO>().ReverseMap();
         }
     }

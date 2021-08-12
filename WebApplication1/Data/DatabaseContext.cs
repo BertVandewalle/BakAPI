@@ -4,24 +4,30 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using WebApplication1.Configurations.Entities;
+using BakAPI.Configurations.Entities;
 
-namespace WebApplication1.Data
+namespace BakAPI.Data
 {
     public class DatabaseContext : IdentityDbContext<ApiUser>
     { 
         public DatabaseContext(DbContextOptions options) : base(options)
-        { }
+        {
+        }
 
 
         public DbSet<Country> Countries { get; set; }
         public DbSet<Hotel> Hotels { get; set; }
+        public DbSet<Player> Players { get; set; }
+        public DbSet<Game> Games { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
             builder.ApplyConfiguration(new CountryConfiguration());
             builder.ApplyConfiguration(new HotelConfiguration());
+            builder.ApplyConfiguration(new GameConfiguration());
+
             builder.ApplyConfiguration(new RoleConfiguration());
 
 

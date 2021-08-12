@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace WebApplication1.Migrations
+namespace BakAPI.Migrations
 {
     public partial class DatabaseCreated : Migration
     {

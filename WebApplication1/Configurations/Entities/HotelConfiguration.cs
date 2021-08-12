@@ -5,9 +5,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using WebApplication1.Data;
+using BakAPI.Data;
 
-namespace WebApplication1.Configurations.Entities
+namespace BakAPI.Configurations.Entities
 {
     public class HotelConfiguration : IEntityTypeConfiguration<Hotel>
     {

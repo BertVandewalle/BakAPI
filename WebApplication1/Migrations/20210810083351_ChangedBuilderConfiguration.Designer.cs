@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using WebApplication1.Data;
+using BakAPI.Data;
 
-namespace WebApplication1.Migrations
+namespace BakAPI.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
     [Migration("20210810083351_ChangedBuilderConfiguration")]

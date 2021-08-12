@@ -4,14 +4,16 @@ using BakAPI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BakAPI.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20210812164731_ChangeGamePlayer2")]
+    partial class ChangeGamePlayer2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -184,9 +186,6 @@ namespace BakAPI.Migrations
                     b.Property<int>("PlayerId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Role")
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
 
                     b.HasIndex("GameId");
@@ -358,15 +357,15 @@ namespace BakAPI.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "b542eabd-3261-41e8-8f33-ed1093de4778",
-                            ConcurrencyStamp = "80964d41-4918-4a9f-bb28-673efda728e4",
+                            Id = "fbf5494f-7ca1-452b-85b3-5dafa10b4728",
+                            ConcurrencyStamp = "dd429cd2-1789-46db-a80e-9f210cbc5906",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "1e52ed3a-8b5c-4598-a3c9-3d61c0598a09",
-                            ConcurrencyStamp = "817aaf06-061f-4dc1-a910-4ccb7225e07a",
+                            Id = "bfa3c4c0-74ab-4718-9c8f-6aa19a9d8934",
+                            ConcurrencyStamp = "f785a408-4d5c-406f-bb83-2c87f1441e7c",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         });

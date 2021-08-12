@@ -2,14 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using WebApplication1.Data;
+using BakAPI.Data;
 
-namespace WebApplication1.IRepository
+namespace BakAPI.IRepository
 {
     public interface IUnitOfWork : IDisposable
     {
         IGenericRepository<Country> Countries { get; }
         IGenericRepository<Hotel> Hotels { get; }
+        IGenericRepository<Player> Players { get; }
+        IGenericRepository<Game> Games { get; }
+        IGenericRepository<GamePlayer> GamePlayers { get; }
+
 
         Task Save();
     }

@@ -14,13 +14,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using WebApplication1.Configurations;
-using WebApplication1.Data;
-using WebApplication1.IRepository;
-using WebApplication1.Repository;
-using WebApplication1.Services;
+using BakAPI.Configurations;
+using BakAPI.Data;
+using BakAPI.IRepository;
+using BakAPI.Repository;
+using BakAPI.Services;
 
-namespace WebApplication1
+namespace BakAPI
 {
     public class Startup
     {

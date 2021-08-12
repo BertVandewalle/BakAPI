@@ -4,9 +4,9 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
-using WebApplication1.Data;
+using BakAPI.Data;
 
-namespace WebApplication1.Models
+namespace BakAPI.Models
 {
   
     public class CreateHotelDTO

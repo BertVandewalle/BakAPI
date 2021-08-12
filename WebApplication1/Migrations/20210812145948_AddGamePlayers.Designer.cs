@@ -4,14 +4,16 @@ using BakAPI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BakAPI.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20210812145948_AddGamePlayers")]
+    partial class AddGamePlayers
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -147,11 +149,6 @@ namespace BakAPI.Migrations
                     b.Property<int>("GreOffScore")
                         .HasColumnType("int");
 
-                    b.Property<int>("GreScore")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("int")
-                        .HasComputedColumnSql("[GreDefScore] + [GreOffScore]");
-
                     b.Property<int>("RedDefScore")
                         .HasColumnType("int");
 
@@ -160,11 +157,6 @@ namespace BakAPI.Migrations
 
                     b.Property<int>("RedOffScore")
                         .HasColumnType("int");
-
-                    b.Property<int>("RedScore")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("int")
-                        .HasComputedColumnSql("[RedDefScore] + [RedOffScore]");
 
                     b.HasKey("Id");
 
@@ -181,11 +173,11 @@ namespace BakAPI.Migrations
                     b.Property<int>("GameId")
                         .HasColumnType("int");
 
-                    b.Property<int>("PlayerId")
+                    b.Property<int>("OrderId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Role")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("PlayerId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -358,15 +350,15 @@ namespace BakAPI.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "b542eabd-3261-41e8-8f33-ed1093de4778",
-                            ConcurrencyStamp = "80964d41-4918-4a9f-bb28-673efda728e4",
+                            Id = "1cf8327c-a8ee-41e3-999a-640c6796d753",
+                            ConcurrencyStamp = "9368c249-552b-4534-8d5b-6bea7d4fdace",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "1e52ed3a-8b5c-4598-a3c9-3d61c0598a09",
-                            ConcurrencyStamp = "817aaf06-061f-4dc1-a910-4ccb7225e07a",
+                            Id = "c4498ee4-0a80-409f-8a19-d00ec41ec82c",
+                            ConcurrencyStamp = "f0dceb3e-7004-4cf0-8e84-9731d6c5e670",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         });
@@ -486,9 +478,7 @@ namespace BakAPI.Migrations
 
                     b.HasOne("BakAPI.Data.Player", "Player")
                         .WithMany("GamePlayers")
-                        .HasForeignKey("PlayerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("PlayerId");
 
                     b.Navigation("Game");
 

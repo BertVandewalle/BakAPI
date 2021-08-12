@@ -4,14 +4,16 @@ using BakAPI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BakAPI.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20210812163639_ChangeGamePlayer")]
+    partial class ChangeGamePlayer
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -181,11 +183,11 @@ namespace BakAPI.Migrations
                     b.Property<int>("GameId")
                         .HasColumnType("int");
 
-                    b.Property<int>("PlayerId")
+                    b.Property<int>("OrderId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Role")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("PlayerId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -358,15 +360,15 @@ namespace BakAPI.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "b542eabd-3261-41e8-8f33-ed1093de4778",
-                            ConcurrencyStamp = "80964d41-4918-4a9f-bb28-673efda728e4",
+                            Id = "2a26ca4d-5063-472c-9cc7-afc6500ab13f",
+                            ConcurrencyStamp = "d48120e5-0085-4c8f-9b27-51534ffd75c8",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "1e52ed3a-8b5c-4598-a3c9-3d61c0598a09",
-                            ConcurrencyStamp = "817aaf06-061f-4dc1-a910-4ccb7225e07a",
+                            Id = "27469da9-f7c4-4dcc-9ed7-b3543173fb12",
+                            ConcurrencyStamp = "157e0d4d-6ac2-431d-9a30-daec781790b1",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         });
@@ -486,9 +488,7 @@ namespace BakAPI.Migrations
 
                     b.HasOne("BakAPI.Data.Player", "Player")
                         .WithMany("GamePlayers")
-                        .HasForeignKey("PlayerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("PlayerId");
 
                     b.Navigation("Game");
 

@@ -2,24 +2,32 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using WebApplication1.Data;
-using WebApplication1.IRepository;
+using BakAPI.Data;
+using BakAPI.IRepository;
 
-namespace WebApplication1.Repository
+namespace BakAPI.Repository
 {
     public class UnitOfWork : IUnitOfWork
     {
         private readonly DatabaseContext _context;
         private IGenericRepository<Country> _countries;
         private IGenericRepository<Hotel> _hotels;
+        private IGenericRepository<Player> _players;
+        private IGenericRepository<Game> _games;
+        private IGenericRepository<GamePlayer> _gamePlayers;
 
         public UnitOfWork(DatabaseContext context)
         {
             _context = context;
         }
         public IGenericRepository<Country> Countries => _countries ??= new GenericRepository<Country>(_context);
-
         public IGenericRepository<Hotel> Hotels => _hotels ??= new GenericRepository<Hotel>(_context);
+        public IGenericRepository<Player> Players => _players ??= new GenericRepository<Player>(_context);
+        public IGenericRepository<Game> Games => _games ??= new GenericRepository<Game>(_context);
+        public IGenericRepository<GamePlayer> GamePlayers => _gamePlayers ??= new GenericRepository<GamePlayer>(_context);
+
+
+
 
         public void Dispose()
         {

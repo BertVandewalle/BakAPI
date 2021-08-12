@@ -8,10 +8,10 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
-using WebApplication1.Data;
-using WebApplication1.Models;
+using BakAPI.Data;
+using BakAPI.Models;
 
-namespace WebApplication1.Services
+namespace BakAPI.Services
 {
     public class AuthManager : IAuthManager
     {

@@ -4,12 +4,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using WebApplication1.Data;
-using WebApplication1.IRepository;
-using WebApplication1.Models;
+using BakAPI.Data;
+using BakAPI.IRepository;
+using BakAPI.Models;
 using X.PagedList;
 
-namespace WebApplication1.Repository
+namespace BakAPI.Repository
 {
     public class GenericRepository<T> : IGenericRepository<T> where T : class
     {
