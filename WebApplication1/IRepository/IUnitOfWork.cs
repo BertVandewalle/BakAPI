@@ -12,7 +12,6 @@ namespace BakAPI.IRepository
         IGenericRepository<Hotel> Hotels { get; }
         IGenericRepository<Player> Players { get; }
         IGenericRepository<Game> Games { get; }
-        IGenericRepository<GamePlayer> GamePlayers { get; }
 
 
         Task Save();

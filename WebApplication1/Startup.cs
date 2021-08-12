@@ -37,7 +37,8 @@ namespace BakAPI
 
             //services.AddControllers();
 
-            services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(Configuration.GetConnectionString("sqlConnection")));
+            //services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(Configuration.GetConnectionString("sqlConnection")));
+            services.AddDbContext<DatabaseContext>(options => options.UseNpgsql(Configuration.GetConnectionString("postgresqlConnection")));
 
             services.AddMemoryCache();
 

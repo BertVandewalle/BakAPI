@@ -4,14 +4,16 @@ using BakAPI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BakAPI.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20210812205342_DeleteGamePlayer")]
+    partial class DeleteGamePlayer
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -152,9 +154,6 @@ namespace BakAPI.Migrations
                         .HasColumnType("int")
                         .HasComputedColumnSql("[GreDefScore] + [GreOffScore]");
 
-                    b.Property<int>("RedDefId")
-                        .HasColumnType("int");
-
                     b.Property<int>("RedDefScore")
                         .HasColumnType("int");
 
@@ -170,10 +169,6 @@ namespace BakAPI.Migrations
                         .HasComputedColumnSql("[RedDefScore] + [RedOffScore]");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("RedDefId");
-
-                    b.HasIndex("RedOffId");
 
                     b.ToTable("Games");
                 });
@@ -238,7 +233,7 @@ namespace BakAPI.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<decimal>("DefWinRate")
-                        .HasColumnType("numeric(18,2)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<double>("Elo")
                         .HasColumnType("float");
@@ -256,19 +251,19 @@ namespace BakAPI.Migrations
                         .HasColumnType("int");
 
                     b.Property<decimal>("GoalMatchRate")
-                        .HasColumnType("numeric(18,2)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("GoalMatchRateDef")
-                        .HasColumnType("numeric(18,2)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("GoalMatchRateOff")
-                        .HasColumnType("numeric(18,2)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("GoalRateDef")
-                        .HasColumnType("numeric(18,2)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("GoalRateOff")
-                        .HasColumnType("numeric(18,2)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("GreDefAmount")
                         .HasColumnType("int");
@@ -283,7 +278,7 @@ namespace BakAPI.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("OffWinRate")
-                        .HasColumnType("numeric(18,2)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("Rank")
                         .HasColumnType("int");
@@ -304,11 +299,26 @@ namespace BakAPI.Migrations
                         .HasColumnType("int");
 
                     b.Property<decimal>("WinRate")
-                        .HasColumnType("numeric(18,2)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
 
                     b.ToTable("Players");
+                });
+
+            modelBuilder.Entity("GamePlayer", b =>
+                {
+                    b.Property<int>("GamesId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PlayersId")
+                        .HasColumnType("int");
+
+                    b.HasKey("GamesId", "PlayersId");
+
+                    b.HasIndex("PlayersId");
+
+                    b.ToTable("GamePlayer");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -340,15 +350,15 @@ namespace BakAPI.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "95bee434-7854-43d7-8adf-7924a896bee3",
-                            ConcurrencyStamp = "5f0e2cb9-b1c9-4f8c-b4cf-8104863d52f9",
+                            Id = "7d00058d-f492-4322-8127-9b543b95e11a",
+                            ConcurrencyStamp = "8fe7ace8-e1b4-4eb8-aeae-63d1bbf2dc5f",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "a4dbf8bb-cf2e-495f-94f4-7bd58a3850d4",
-                            ConcurrencyStamp = "f2ba9d60-d0fe-4567-9d9b-0716d736fcf5",
+                            Id = "1d7c6e08-6b0e-4b01-a302-121d0c9593b2",
+                            ConcurrencyStamp = "b5a16df1-c2b9-4cd4-8576-bc9b7955adb3",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         });
@@ -458,25 +468,6 @@ namespace BakAPI.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("BakAPI.Data.Game", b =>
-                {
-                    b.HasOne("BakAPI.Data.Player", "RedDef")
-                        .WithMany("GamesRedDef")
-                        .HasForeignKey("RedDefId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("BakAPI.Data.Player", "RedOff")
-                        .WithMany("GamesRedOff")
-                        .HasForeignKey("RedOffId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("RedDef");
-
-                    b.Navigation("RedOff");
-                });
-
             modelBuilder.Entity("BakAPI.Data.Hotel", b =>
                 {
                     b.HasOne("BakAPI.Data.Country", "Country")
@@ -486,6 +477,21 @@ namespace BakAPI.Migrations
                         .IsRequired();
 
                     b.Navigation("Country");
+                });
+
+            modelBuilder.Entity("GamePlayer", b =>
+                {
+                    b.HasOne("BakAPI.Data.Game", null)
+                        .WithMany()
+                        .HasForeignKey("GamesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BakAPI.Data.Player", null)
+                        .WithMany()
+                        .HasForeignKey("PlayersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -542,13 +548,6 @@ namespace BakAPI.Migrations
             modelBuilder.Entity("BakAPI.Data.Country", b =>
                 {
                     b.Navigation("Hotels");
-                });
-
-            modelBuilder.Entity("BakAPI.Data.Player", b =>
-                {
-                    b.Navigation("GamesRedDef");
-
-                    b.Navigation("GamesRedOff");
                 });
 #pragma warning restore 612, 618
         }

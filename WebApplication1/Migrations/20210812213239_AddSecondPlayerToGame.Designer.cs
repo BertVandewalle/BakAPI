@@ -4,14 +4,16 @@ using BakAPI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BakAPI.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20210812213239_AddSecondPlayerToGame")]
+    partial class AddSecondPlayerToGame
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -238,7 +240,7 @@ namespace BakAPI.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<decimal>("DefWinRate")
-                        .HasColumnType("numeric(18,2)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<double>("Elo")
                         .HasColumnType("float");
@@ -256,19 +258,19 @@ namespace BakAPI.Migrations
                         .HasColumnType("int");
 
                     b.Property<decimal>("GoalMatchRate")
-                        .HasColumnType("numeric(18,2)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("GoalMatchRateDef")
-                        .HasColumnType("numeric(18,2)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("GoalMatchRateOff")
-                        .HasColumnType("numeric(18,2)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("GoalRateDef")
-                        .HasColumnType("numeric(18,2)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("GoalRateOff")
-                        .HasColumnType("numeric(18,2)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("GreDefAmount")
                         .HasColumnType("int");
@@ -283,7 +285,7 @@ namespace BakAPI.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("OffWinRate")
-                        .HasColumnType("numeric(18,2)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("Rank")
                         .HasColumnType("int");
@@ -304,7 +306,7 @@ namespace BakAPI.Migrations
                         .HasColumnType("int");
 
                     b.Property<decimal>("WinRate")
-                        .HasColumnType("numeric(18,2)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
 
@@ -340,15 +342,15 @@ namespace BakAPI.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "95bee434-7854-43d7-8adf-7924a896bee3",
-                            ConcurrencyStamp = "5f0e2cb9-b1c9-4f8c-b4cf-8104863d52f9",
+                            Id = "a7ebd6e4-ed5b-4217-8e07-3efa1d8ec95b",
+                            ConcurrencyStamp = "816d5b7a-fc70-47a7-b4c1-e1483da2d191",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "a4dbf8bb-cf2e-495f-94f4-7bd58a3850d4",
-                            ConcurrencyStamp = "f2ba9d60-d0fe-4567-9d9b-0716d736fcf5",
+                            Id = "852d6fc1-25f6-494a-9af0-fddd17211c5b",
+                            ConcurrencyStamp = "d7e1a38f-a43b-484d-9029-7f289ac73650",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         });
@@ -463,13 +465,13 @@ namespace BakAPI.Migrations
                     b.HasOne("BakAPI.Data.Player", "RedDef")
                         .WithMany("GamesRedDef")
                         .HasForeignKey("RedDefId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("BakAPI.Data.Player", "RedOff")
                         .WithMany("GamesRedOff")
                         .HasForeignKey("RedOffId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("RedDef");

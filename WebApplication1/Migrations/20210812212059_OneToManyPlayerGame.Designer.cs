@@ -4,14 +4,16 @@ using BakAPI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BakAPI.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20210812212059_OneToManyPlayerGame")]
+    partial class OneToManyPlayerGame
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -173,8 +175,6 @@ namespace BakAPI.Migrations
 
                     b.HasIndex("RedDefId");
 
-                    b.HasIndex("RedOffId");
-
                     b.ToTable("Games");
                 });
 
@@ -238,7 +238,7 @@ namespace BakAPI.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<decimal>("DefWinRate")
-                        .HasColumnType("numeric(18,2)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<double>("Elo")
                         .HasColumnType("float");
@@ -256,19 +256,19 @@ namespace BakAPI.Migrations
                         .HasColumnType("int");
 
                     b.Property<decimal>("GoalMatchRate")
-                        .HasColumnType("numeric(18,2)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("GoalMatchRateDef")
-                        .HasColumnType("numeric(18,2)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("GoalMatchRateOff")
-                        .HasColumnType("numeric(18,2)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("GoalRateDef")
-                        .HasColumnType("numeric(18,2)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("GoalRateOff")
-                        .HasColumnType("numeric(18,2)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("GreDefAmount")
                         .HasColumnType("int");
@@ -283,7 +283,7 @@ namespace BakAPI.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("OffWinRate")
-                        .HasColumnType("numeric(18,2)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("Rank")
                         .HasColumnType("int");
@@ -304,7 +304,7 @@ namespace BakAPI.Migrations
                         .HasColumnType("int");
 
                     b.Property<decimal>("WinRate")
-                        .HasColumnType("numeric(18,2)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
 
@@ -340,15 +340,15 @@ namespace BakAPI.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "95bee434-7854-43d7-8adf-7924a896bee3",
-                            ConcurrencyStamp = "5f0e2cb9-b1c9-4f8c-b4cf-8104863d52f9",
+                            Id = "c93ef72e-838c-4d32-b0b0-bdf5d177ffd2",
+                            ConcurrencyStamp = "ef0960b0-b1c4-40d6-80c2-617ec00b43a8",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "a4dbf8bb-cf2e-495f-94f4-7bd58a3850d4",
-                            ConcurrencyStamp = "f2ba9d60-d0fe-4567-9d9b-0716d736fcf5",
+                            Id = "d919025f-5e2f-40c0-870f-377378dd721e",
+                            ConcurrencyStamp = "b8491a46-087a-4f87-a4df-0437c8b9c349",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         });
@@ -461,20 +461,12 @@ namespace BakAPI.Migrations
             modelBuilder.Entity("BakAPI.Data.Game", b =>
                 {
                     b.HasOne("BakAPI.Data.Player", "RedDef")
-                        .WithMany("GamesRedDef")
+                        .WithMany("Games")
                         .HasForeignKey("RedDefId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("BakAPI.Data.Player", "RedOff")
-                        .WithMany("GamesRedOff")
-                        .HasForeignKey("RedOffId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("RedDef");
-
-                    b.Navigation("RedOff");
                 });
 
             modelBuilder.Entity("BakAPI.Data.Hotel", b =>
@@ -546,9 +538,7 @@ namespace BakAPI.Migrations
 
             modelBuilder.Entity("BakAPI.Data.Player", b =>
                 {
-                    b.Navigation("GamesRedDef");
-
-                    b.Navigation("GamesRedOff");
+                    b.Navigation("Games");
                 });
 #pragma warning restore 612, 618
         }

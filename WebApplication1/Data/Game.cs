@@ -18,7 +18,7 @@ namespace BakAPI.Data
 
         //[ForeignKey(nameof(RedOff))]
         public int RedOffId { get; set; }
-        //public Player RedOff { get; set; }
+        public Player RedOff { get; set; }
         public int RedOffScore { get; set; }
 
 
@@ -35,7 +35,10 @@ namespace BakAPI.Data
         public int GreScore { get; set; }
         public int RedScore { get; set; }
 
+        public int RedDefId { get; set; }
+        public Player RedDef { get; set; }
 
-        public IList<GamePlayer> GamePlayers { get; set; }
+ 
+        //public virtual ICollection<Player> Players { get; set; }
     }
 }

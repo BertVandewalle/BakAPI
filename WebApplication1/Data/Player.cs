@@ -33,7 +33,8 @@ namespace BakAPI.Data
         public Decimal GoalMatchRate { get; set; }
         public Decimal GoalMatchRateDef { get; set; }
         public Decimal GoalMatchRateOff { get; set; }
-        public int GamePlayerId { get; set; }
-        public GamePlayer GamePlayers { get; set; }
+        public virtual ICollection<Game> GamesRedDef { get; set; }
+        public virtual ICollection<Game> GamesRedOff { get; set; }
+
     }
 }

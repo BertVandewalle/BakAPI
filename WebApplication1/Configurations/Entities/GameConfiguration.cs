@@ -14,6 +14,8 @@ namespace BakAPI.Configurations.Entities
         {
             builder.Property(p => p.GreScore).HasComputedColumnSql("[GreDefScore] + [GreOffScore]");
             builder.Property(p => p.RedScore).HasComputedColumnSql("[RedDefScore] + [RedOffScore]");
+            builder.HasOne<Player>(g => g.RedDef).WithMany(p => p.GamesRedDef).HasForeignKey(g => g.RedDefId).OnDelete(DeleteBehavior.NoAction);
+            builder.HasOne<Player>(g => g.RedOff).WithMany(p => p.GamesRedOff).HasForeignKey(g => g.RedOffId).OnDelete(DeleteBehavior.NoAction);
 
         }
     }

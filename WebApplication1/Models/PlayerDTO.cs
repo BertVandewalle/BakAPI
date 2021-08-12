@@ -40,6 +40,6 @@ namespace BakAPI.Models
         public Decimal GoalMatchRate { get; set; }
         public Decimal GoalMatchRateDef { get; set; }
         public Decimal GoalMatchRateOff { get; set; }
-        public virtual IList<GamePlayer> GamePlayers { get; set; }
+        public ICollection<Game> Games { get; set; }
     }
 }

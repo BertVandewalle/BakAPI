@@ -21,11 +21,12 @@ namespace BakAPI.Models
 
         public int GreOffId { get; set; }
         public int GreOffScore { get; set; }
+        public ICollection<Player> Players { get; set; }
+
     }
     public class GameDTO : CreateGameDTO
     {
         public int Id { get; set; }
-        public IList<GamePlayer> GamePlayers { get; set; }
 
 
     }
