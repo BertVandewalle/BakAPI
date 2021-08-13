@@ -11,33 +11,29 @@ namespace BakAPI.Data
     {
         public int Id { get; set; }
 
-        //public int PlayerId { get; set; }
-        ///public Player Player { get; set; }
-
+       
+        public int RedDefId { get; set; }
+        public Player RedDef { get; set; }
         public int RedDefScore { get; set; }
 
-        //[ForeignKey(nameof(RedOff))]
         public int RedOffId { get; set; }
         public Player RedOff { get; set; }
         public int RedOffScore { get; set; }
 
 
-        //[ForeignKey(nameof(GreDef))]
         public int GreDefId { get; set; }
-        //public Player GreDef { get; set; }
+        public Player GreDef { get; set; }
         public int GreDefScore { get; set; }
 
-        //[ForeignKey(nameof(GreOff))]
         public int GreOffId { get; set; }
-        //public Player GreOff { get; set; }
+        public Player GreOff { get; set; }
         public int GreOffScore { get; set; }
 
         public int GreScore { get; set; }
         public int RedScore { get; set; }
-
-        public int RedDefId { get; set; }
-        public Player RedDef { get; set; }
-
+        public DateTime StartDateTime { get; set; }
+        public TimeSpan Duration { get; set; }
+        
  
         //public virtual ICollection<Player> Players { get; set; }
     }

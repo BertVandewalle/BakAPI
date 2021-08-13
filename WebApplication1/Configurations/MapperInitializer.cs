@@ -23,6 +23,9 @@ namespace BakAPI.Configurations
             CreateMap<Player, CreatePlayerDTO>().ReverseMap();
             CreateMap<Game, GameDTO>().ReverseMap();
             CreateMap<Game, CreateGameDTO>().ReverseMap();
+            CreateMap<Game, UpdateGameDTO>().ReverseMap();
+            CreateMap<Rank, RankDTO>().ReverseMap();
+            CreateMap<Goal, GoalDTO>().ReverseMap();
 
 
             //CreateMap<ApiUser, LoginUserDTO>().ReverseMap();

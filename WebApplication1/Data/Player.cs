@@ -24,7 +24,8 @@ namespace BakAPI.Data
         public Decimal WinRate { get; set; }
         public double Elo { get; set; }
         //TODO: ref to rank
-        public int Rank { get; set; }
+        public int? RankId { get; set; }
+        public Rank Rank { get; set; }
         public int GoalAmount { get; set; }
         public int GoalAmountDef { get; set; }
         public int GoalAmountOff { get; set; }
@@ -35,6 +36,8 @@ namespace BakAPI.Data
         public Decimal GoalMatchRateOff { get; set; }
         public virtual ICollection<Game> GamesRedDef { get; set; }
         public virtual ICollection<Game> GamesRedOff { get; set; }
+        public virtual ICollection<Game> GamesGreDef { get; set; }
+        public virtual ICollection<Game> GamesGreOff { get; set; }
 
     }
 }

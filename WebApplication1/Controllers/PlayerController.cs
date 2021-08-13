@@ -3,6 +3,7 @@ using BakAPI.Data;
 using BakAPI.IRepository;
 using BakAPI.Models;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -29,9 +30,9 @@ namespace BakAPI.Controllers
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> GetPlayers([FromQuery] RequestParams requestParams)
+        public async Task<IActionResult> GetPlayers()
         {
-            var players = await _unitOfWork.Players.GetPaged(requestParams);
+            var players = await _unitOfWork.Players.GetAll(includes: new List<string> { "Rank" });
             var results = _mapper.Map<IList<PlayerDTO>>(players);
             return Ok(results);
         }
@@ -41,7 +42,7 @@ namespace BakAPI.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetPlayer(int id)
         {
-            var player = await _unitOfWork.Players.Get(q => q.Id == id, new List<string> { "GamePlayers" });
+            var player = await _unitOfWork.Players.Get(q => q.Id == id, new List<string> { "Rank","GamesRedDef","GamesRedOff","GamesGreDef","GamesGreOff" });
             var results = _mapper.Map<PlayerDTO>(player);
             return Ok(results);
         }
@@ -57,10 +58,42 @@ namespace BakAPI.Controllers
                 return BadRequest(ModelState);
             }
             var player = _mapper.Map<Player>(playerDTO);
+            //UpdateRank
+            var rank = await _unitOfWork.Ranks.Get(q => q.LowerBound <= player.Elo && q.UpperBound >= player.Elo);
+            player.RankId = rank.Id;
+
             await _unitOfWork.Players.Insert(player);
             await _unitOfWork.Save();
             return CreatedAtRoute("GetPlayer", new { id = player.Id }, player);
         }
+
+        [HttpPatch("{id:int}")]
+        public async Task<IActionResult> JsonPatchPlayer(int id, [FromBody] JsonPatchDocument<Player> patch)
+        {
+            if (!ModelState.IsValid)
+            {
+                _logger.LogError($"Invalid PATCH attempt in {nameof(JsonPatchPlayer)}");
+                return BadRequest(ModelState);
+            }
+            var player = await _unitOfWork.Players.Get(q => q.Id == id);
+            if(player == null)
+            {
+                return NotFound();
+            }
+            patch.ApplyTo(player);
+            //UpdateRank
+            var rank = await _unitOfWork.Ranks.Get(q => q.LowerBound <= player.Elo && q.UpperBound >= player.Elo);
+            player.RankId = rank.Id;
+
+            _unitOfWork.Players.Update(player);
+            await _unitOfWork.Save();
+
+            return NoContent();
+        }
+
+
+
+
     }
 
 }

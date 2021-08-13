@@ -61,7 +61,6 @@ namespace BakAPI.Controllers
                 return StatusCode(500, "Internal Server Error. Please try again later");
             }
         }
-        [Authorize]
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status201Created)]
@@ -87,7 +86,6 @@ namespace BakAPI.Controllers
                 return StatusCode(500, "Internal Server Error. Please try again later");
             }
         }
-        [Authorize]
         [HttpPut("{id:int}")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]

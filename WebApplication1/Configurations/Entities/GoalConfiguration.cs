@@ -8,11 +8,12 @@ using System.Threading.Tasks;
 
 namespace BakAPI.Configurations.Entities
 {
-    public class PlayerConfiguration : IEntityTypeConfiguration<Player>
+    public class Goalconfiguration : IEntityTypeConfiguration<Goal>
     {
-        public void Configure(EntityTypeBuilder<Player> builder)
+        public void Configure(EntityTypeBuilder<Goal> builder)
         {
-            builder.HasOne<Rank>(p => p.Rank).WithMany(r => r.Players).HasForeignKey(p => p.RankId).OnDelete(DeleteBehavior.Restrict);
+            
         }
     }
 }
+

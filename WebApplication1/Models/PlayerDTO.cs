@@ -10,7 +10,7 @@ namespace BakAPI.Models
     public class CreatePlayerDTO
     {
         [Required]
-        public string Name { get; set; }
+        public virtual string Name { get; set; }
         public double Elo { get; set; }
 
 
@@ -31,7 +31,8 @@ namespace BakAPI.Models
         public Decimal OffWinRate { get; set; }
         public Decimal WinRate { get; set; }
         //TODO: ref to rank
-        public int Rank { get; set; }
+        public int RankId { get; set; }
+        public RankDTO Rank { get; set; }
         public int GoalAmount { get; set; }
         public int GoalAmountDef { get; set; }
         public int GoalAmountOff { get; set; }
@@ -40,6 +41,15 @@ namespace BakAPI.Models
         public Decimal GoalMatchRate { get; set; }
         public Decimal GoalMatchRateDef { get; set; }
         public Decimal GoalMatchRateOff { get; set; }
-        public ICollection<Game> Games { get; set; }
+        public ICollection<GameDTO> GamesRedDef { get; set; }
+        public ICollection<GameDTO> GamesRedOff { get; set; }
+        public ICollection<GameDTO> GamesGreDef { get; set; }
+        public ICollection<GameDTO> GamesGreOff { get; set; }
+
+    }
+    public class PatchPlayerDTO : PlayerDTO
+    {
+        public override string Name { get; set; }
+
     }
 }

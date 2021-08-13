@@ -14,6 +14,9 @@ namespace BakAPI.Repository
         private IGenericRepository<Hotel> _hotels;
         private IGenericRepository<Player> _players;
         private IGenericRepository<Game> _games;
+        private IGenericRepository<Rank> _ranks;
+        private IGenericRepository<Goal> _goals;
+
 
         public UnitOfWork(DatabaseContext context)
         {
@@ -23,9 +26,8 @@ namespace BakAPI.Repository
         public IGenericRepository<Hotel> Hotels => _hotels ??= new GenericRepository<Hotel>(_context);
         public IGenericRepository<Player> Players => _players ??= new GenericRepository<Player>(_context);
         public IGenericRepository<Game> Games => _games ??= new GenericRepository<Game>(_context);
-
-
-
+        public IGenericRepository<Rank> Ranks => _ranks ??= new GenericRepository<Rank>(_context);
+        public IGenericRepository<Goal> Goals => _goals ??= new GenericRepository<Goal>(_context);
 
         public void Dispose()
         {

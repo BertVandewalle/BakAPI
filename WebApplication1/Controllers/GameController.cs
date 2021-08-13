@@ -41,7 +41,7 @@ namespace BakAPI.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetGame(int id)
         {
-            var game = await _unitOfWork.Games.Get(q => q.Id == id, new List<string> { "GamePlayers" });
+            var game = await _unitOfWork.Games.Get(q => q.Id == id, new List<string> { "RedDef", "RedOff", "GreDef", "GreOff" });
             var results = _mapper.Map<GameDTO>(game);
             return Ok(results);
         }
@@ -56,10 +56,58 @@ namespace BakAPI.Controllers
                 _logger.LogError($"Invalid POST attempt in {nameof(CreateGame)}");
                 return BadRequest(ModelState);
             }
+            gameDTO.RedScore = gameDTO.RedDefScore + gameDTO.RedOffScore;
             var game = _mapper.Map<Game>(gameDTO);
             await _unitOfWork.Games.Insert(game);
             await _unitOfWork.Save();
+
             return CreatedAtRoute("GetGame", new { id = game.Id }, game);
+        }
+        [HttpPut("{id:int}")]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> UpdateGame(int id, [FromBody] UpdateGameDTO gameDTO)
+        {
+            if (!ModelState.IsValid || id < 1)
+            {
+                _logger.LogError($"Invalid UPDATE attempt in {nameof(UpdateGame)}");
+                return BadRequest(ModelState);
+            }
+
+            var game = await _unitOfWork.Games.Get(q => q.Id == id);
+            if (game == null)
+            {
+                return BadRequest("Submitted data is invalid");
+            }
+            gameDTO.RedScore = gameDTO.RedDefScore + gameDTO.RedOffScore;
+            _mapper.Map(gameDTO, game);
+            _unitOfWork.Games.Update(game);
+            await _unitOfWork.Save();
+
+            return NoContent();
+        }
+        [HttpDelete("{id:int}")]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> DeleteGame(int id)
+        {
+            if (id < 1)
+            {
+                _logger.LogError($"Invalid UPDATE attempt in {nameof(DeleteGame)}");
+                return BadRequest();
+            }
+
+            var game = await _unitOfWork.Games.Get(q => q.Id == id);
+            if (game == null)
+            {
+                _logger.LogError($"Invalid UPDATE attempt in {nameof(DeleteGame)}");
+                return BadRequest("Submitted data is invalid");
+            }
+            await _unitOfWork.Games.Delete(id);
+            await _unitOfWork.Save();
+            return NoContent();
         }
     }
 
