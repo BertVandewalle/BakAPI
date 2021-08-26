@@ -19,6 +19,8 @@ using BakAPI.Data;
 using BakAPI.IRepository;
 using BakAPI.Repository;
 using BakAPI.Services;
+using Microsoft.AspNetCore.HttpOverrides;
+using System.Net;
 
 namespace BakAPI
 {
@@ -71,7 +73,11 @@ namespace BakAPI
             services.AddControllers().AddNewtonsoftJson(op =>
                 op.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             
-            services.ConfigureVersioning(); 
+            services.ConfigureVersioning();
+            services.Configure<ForwardedHeadersOptions>(options =>
+            {
+                options.KnownProxies.Add(IPAddress.Parse("10.0.0.100"));
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -88,6 +94,12 @@ namespace BakAPI
             app.ConfigureExceptionHandler();
 
             //app.UseHttpsRedirection();
+            app.UseForwardedHeaders(new ForwardedHeadersOptions
+            {
+                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+            });
+
+            app.UseAuthentication();
 
             app.UseCors("AllowAll");
 
