@@ -43,7 +43,7 @@ namespace BakAPI
             Host.CreateDefaultBuilder(args)
                 .ConfigureAppConfiguration((hostingContext, config) =>
                 {
-                    config.AddEnvironmentVariables();
+                    config.AddEnvironmentVariables(prefix: "BakAPI_");
                 })
                 .UseSerilog()
                 .ConfigureWebHostDefaults(webBuilder =>
