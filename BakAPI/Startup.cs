@@ -37,7 +37,7 @@ namespace BakAPI
             string pgsqlDatabase = Environment.GetEnvironmentVariable("PGSQLDATABASE");
             string pgsqlUser = Environment.GetEnvironmentVariable("PGSQLUSER");
             string pgsqlPassword = Environment.GetEnvironmentVariable("PGSQLPASSWORD");
-            string pgsqlConnection = new string($"Host=localhost; database = {pgsqlDatabase}; Username={pgsqlUser}; Password = {pgsqlPassword};");
+            string pgsqlConnection = new ($"Host=localhost; database = {pgsqlDatabase}; Username={pgsqlUser}; Password = {pgsqlPassword};");
             services.AddDbContext<DatabaseContext>(options => options.UseNpgsql(pgsqlConnection));
 
             services.AddMemoryCache();
