@@ -17,11 +17,13 @@ namespace BakAPI.Data
         public int GameAmount { get; set; }
         public int WinAmount { get; set; }
         public int LossAmount { get; set; }
+        public int DefAmount { get; set; }
+        public int OffAmount { get; set; }
         public int WinDefAmount { get; set; }
         public int WinOffAmount { get; set; }
-        public Decimal DefWinRate { get; set; }
-        public Decimal OffWinRate { get; set; }
-        public Decimal WinRate { get; set; }
+        public double DefWinRate { get; set; }
+        public double OffWinRate { get; set; }
+        public double WinRate { get; set; }
         public double Elo { get; set; }
         //TODO: ref to rank
         public int? RankId { get; set; }
@@ -29,15 +31,20 @@ namespace BakAPI.Data
         public int GoalAmount { get; set; }
         public int GoalAmountDef { get; set; }
         public int GoalAmountOff { get; set; }
-        public Decimal GoalRateDef { get; set; }
-        public Decimal GoalRateOff { get; set; }
-        public Decimal GoalMatchRate { get; set; }
-        public Decimal GoalMatchRateDef { get; set; }
-        public Decimal GoalMatchRateOff { get; set; }
+        public double GoalRateDef { get; set; }
+        public double GoalRateOff { get; set; }
+        public double GoalMatchRate { get; set; }
+        public double GoalMatchRateDef { get; set; }
+        public double GoalMatchRateOff { get; set; }
         public virtual ICollection<Game> GamesRedDef { get; set; }
         public virtual ICollection<Game> GamesRedOff { get; set; }
         public virtual ICollection<Game> GamesGreDef { get; set; }
         public virtual ICollection<Game> GamesGreOff { get; set; }
+        public virtual ICollection<Goal> Goals { get; set; }
+        public virtual ICollection<Duo> DefDuos { get; set; }
+        public virtual ICollection<Duo> OffDuos { get; set; }
+
+
 
     }
 }

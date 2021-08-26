@@ -111,7 +111,7 @@ namespace BakAPI
                 new RateLimitRule
                 {
                     Endpoint = "*",
-                    Limit = 10,
+                    Limit = 200,
                     Period = "1s"
                 }
             };

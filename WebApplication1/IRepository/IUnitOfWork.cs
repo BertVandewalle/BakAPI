@@ -14,6 +14,7 @@ namespace BakAPI.IRepository
         IGenericRepository<Game> Games { get; }
         IGenericRepository<Rank> Ranks { get; }
         IGenericRepository<Goal> Goals { get; }
+        IGenericRepository<Duo> Duos { get; }
 
 
         Task Save();

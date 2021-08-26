@@ -8,11 +8,13 @@ using System.Threading.Tasks;
 
 namespace BakAPI.Configurations.Entities
 {
-    public class Goalconfiguration : IEntityTypeConfiguration<Goal>
+    public class GoalConfiguration : IEntityTypeConfiguration<Goal>
     {
         public void Configure(EntityTypeBuilder<Goal> builder)
         {
-            
+            builder.HasOne<Player>(g => g.Player).WithMany(p => p.Goals).HasForeignKey(g => g.PlayerId).OnDelete(DeleteBehavior.Cascade);
+            builder.HasOne<Game>(g => g.Game).WithMany(g => g.Goals).HasForeignKey(g => g.GameId).OnDelete(DeleteBehavior.Cascade);
+
         }
     }
 }

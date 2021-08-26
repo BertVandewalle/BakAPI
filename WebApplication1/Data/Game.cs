@@ -33,8 +33,15 @@ namespace BakAPI.Data
         public int RedScore { get; set; }
         public DateTime StartDateTime { get; set; }
         public TimeSpan Duration { get; set; }
-        
- 
-        //public virtual ICollection<Player> Players { get; set; }
+
+        public string Winner { get; set; }
+        public int DuoRedId { get; set; }
+        public Duo DuoRed { get; set; }
+        public int DuoGreId { get; set; }
+        public Duo DuoGre { get; set; }
+
+        public virtual ICollection<Player> Players { get; set; }
+        public virtual ICollection<Goal> Goals { get; set; }
+
     }
 }

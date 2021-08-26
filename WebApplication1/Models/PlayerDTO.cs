@@ -25,31 +25,32 @@ namespace BakAPI.Models
         public int GameAmount { get; set; }
         public int WinAmount { get; set; }
         public int LossAmount { get; set; }
+        public int DefAmount { get; set; }
+        public int OffAmount { get; set; }
         public int WinDefAmount { get; set; }
         public int WinOffAmount { get; set; }
-        public Decimal DefWinRate { get; set; }
-        public Decimal OffWinRate { get; set; }
-        public Decimal WinRate { get; set; }
+        public double DefWinRate { get; set; }
+        public double OffWinRate { get; set; }
+        public double WinRate { get; set; }
         //TODO: ref to rank
         public int RankId { get; set; }
         public RankDTO Rank { get; set; }
         public int GoalAmount { get; set; }
         public int GoalAmountDef { get; set; }
         public int GoalAmountOff { get; set; }
-        public Decimal GoalRateDef { get; set; }
-        public Decimal GoalRateOff { get; set; }
-        public Decimal GoalMatchRate { get; set; }
-        public Decimal GoalMatchRateDef { get; set; }
-        public Decimal GoalMatchRateOff { get; set; }
+        public double GoalRateDef { get; set; }
+        public double GoalRateOff { get; set; }
+        public double GoalMatchRate { get; set; }
+        public double GoalMatchRateDef { get; set; }
+        public double GoalMatchRateOff { get; set; }
         public ICollection<GameDTO> GamesRedDef { get; set; }
         public ICollection<GameDTO> GamesRedOff { get; set; }
         public ICollection<GameDTO> GamesGreDef { get; set; }
         public ICollection<GameDTO> GamesGreOff { get; set; }
+        public ICollection<GoalDTO> Goals { get; set; }
+        public virtual ICollection<DuoDTO> DefDuos { get; set; }
+        public virtual ICollection<DuoDTO> OffDuos { get; set; }
 
     }
-    public class PatchPlayerDTO : PlayerDTO
-    {
-        public override string Name { get; set; }
-
-    }
+    
 }

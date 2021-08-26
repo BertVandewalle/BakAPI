@@ -41,13 +41,14 @@ namespace BakAPI.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetGame(int id)
         {
-            var game = await _unitOfWork.Games.Get(q => q.Id == id, new List<string> { "RedDef", "RedOff", "GreDef", "GreOff" });
+            var game = await _unitOfWork.Games.Get(q => q.Id == id);
             var results = _mapper.Map<GameDTO>(game);
             return Ok(results);
         }
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status201Created)]
+        //[ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> CreateGame([FromBody] CreateGameDTO gameDTO)
         {
@@ -57,12 +58,28 @@ namespace BakAPI.Controllers
                 return BadRequest(ModelState);
             }
             gameDTO.RedScore = gameDTO.RedDefScore + gameDTO.RedOffScore;
+            gameDTO.GreScore = gameDTO.GreDefScore + gameDTO.GreOffScore;
+            if (gameDTO.RedScore > gameDTO.GreScore) gameDTO.Winner = "Red";
+            else gameDTO.Winner = "Green";
+
+            if (gameDTO.DuoGreId == 0)
+            {
+                var duoRed = await _unitOfWork.Duos.Get(d => d.DefPlayerId == gameDTO.RedDefId && d.OffPlayerId == gameDTO.RedOffId);
+                var duoGre = await _unitOfWork.Duos.Get(d => d.DefPlayerId == gameDTO.GreDefId && d.OffPlayerId == gameDTO.GreOffId);
+                gameDTO.DuoRedId = duoRed.Id;
+                gameDTO.DuoGreId = duoGre.Id;
+            }
             var game = _mapper.Map<Game>(gameDTO);
             await _unitOfWork.Games.Insert(game);
             await _unitOfWork.Save();
+            var deltaElo = await UpdateStats.Update_Elo_PlayerStats(game, _unitOfWork,_logger);
 
-            return CreatedAtRoute("GetGame", new { id = game.Id }, game);
+            
+
+            //return CreatedAtRoute("GetGame", new { id = game.Id }, new List<object> { game.Id, deltaElo });
+            return Ok(new List<object> { game.Id, deltaElo });
         }
+
         [HttpPut("{id:int}")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -109,6 +126,27 @@ namespace BakAPI.Controllers
             await _unitOfWork.Save();
             return NoContent();
         }
+        [HttpDelete]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> DeleteAllGames()
+        {
+            var games = await _unitOfWork.Games.GetAll();
+            if (games == null)
+            {
+                _logger.LogError($"Invalid DELETE attempt in {nameof(DeleteAllGames)}");
+                return BadRequest("Submitted data is invalid");
+            }
+            var gameIds = from game in games select game.Id;
+            foreach (int Id in gameIds)
+            {
+                await _unitOfWork.Games.Delete(Id);
+            }
+            await _unitOfWork.Save();
+            return NoContent();
+        }
+
     }
 
 }

@@ -31,6 +31,12 @@ namespace BakAPI.Models
         public DateTime StartDateTime { get; set; }
         public TimeSpan Duration { get; set; }
 
+        public string Winner { get; set; }
+
+        public int DuoRedId { get; set; }
+        public int DuoGreId { get; set; }
+
+
     }
     public class GameDTO : CreateGameDTO
     {
@@ -40,6 +46,11 @@ namespace BakAPI.Models
         public PlayerDTO GreDef { get; set; }
         public PlayerDTO GreOff { get; set; }
 
+        public DuoDTO DuoRed { get; set; }
+        public DuoDTO DuoGre { get; set; }
+
+        public ICollection<PlayerDTO> Players { get; set; }
+        public ICollection<GoalDTO> Goals { get; set; }
 
     }
     public class UpdateGameDTO : CreateGameDTO

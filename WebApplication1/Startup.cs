@@ -87,12 +87,12 @@ namespace BakAPI
 
             app.ConfigureExceptionHandler();
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
 
             app.UseCors("AllowAll");
 
-            app.UseResponseCaching();
-            app.UseHttpCacheHeaders();
+            //app.UseResponseCaching();
+            //app.UseHttpCacheHeaders();
             app.UseIpRateLimiting();
 
             app.UseRouting();

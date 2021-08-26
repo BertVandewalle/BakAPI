@@ -70,6 +70,13 @@ namespace BakAPI.Repository
             return await query.AsNoTracking().ToListAsync();
         }
 
+        public IList<T> GetAllSync()
+        {
+            IQueryable<T> query = _db;
+            return query.AsNoTracking().ToList();
+
+        }
+
         public async Task<IPagedList<T>> GetPaged(RequestParams requestParams,List<string> includes = null)
         {
             IQueryable<T> query = _db;

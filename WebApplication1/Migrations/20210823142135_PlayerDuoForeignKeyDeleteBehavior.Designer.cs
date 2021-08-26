@@ -3,15 +3,17 @@ using System;
 using BakAPI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace BakAPI.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20210823142135_PlayerDuoForeignKeyDeleteBehavior")]
+    partial class PlayerDuoForeignKeyDeleteBehavior
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -162,12 +164,6 @@ namespace BakAPI.Migrations
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<int>("DuoGreId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("DuoRedId")
-                        .HasColumnType("integer");
-
                     b.Property<TimeSpan>("Duration")
                         .HasColumnType("interval");
 
@@ -204,14 +200,7 @@ namespace BakAPI.Migrations
                     b.Property<DateTime>("StartDateTime")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<string>("Winner")
-                        .HasColumnType("text");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("DuoGreId");
-
-                    b.HasIndex("DuoRedId");
 
                     b.HasIndex("GreDefId");
 
@@ -308,9 +297,6 @@ namespace BakAPI.Migrations
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<int>("DefAmount")
-                        .HasColumnType("integer");
-
                     b.Property<double>("DefWinRate")
                         .HasColumnType("double precision");
 
@@ -358,9 +344,6 @@ namespace BakAPI.Migrations
 
                     b.Property<string>("Name")
                         .HasColumnType("text");
-
-                    b.Property<int>("OffAmount")
-                        .HasColumnType("integer");
 
                     b.Property<double>("OffWinRate")
                         .HasColumnType("double precision");
@@ -729,15 +712,15 @@ namespace BakAPI.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "8bf2c903-387e-4ccf-bb08-60532e52cf85",
-                            ConcurrencyStamp = "4a27b400-9371-4926-a7f5-580aca1c5530",
+                            Id = "058fbc3e-525a-4b89-8e5a-277354472467",
+                            ConcurrencyStamp = "5d205c52-3a89-4fb9-95ef-cd693aaa3b76",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "885ec6f9-06cd-4e9d-a8ba-6c7f2212b483",
-                            ConcurrencyStamp = "55210553-5a0e-4160-9faa-cae2c523915e",
+                            Id = "a2d99d29-c53d-4e5d-bbf0-b987b77af6ed",
+                            ConcurrencyStamp = "abd2fa1c-db2e-49f5-b0c2-f922fa38a6d9",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         });
@@ -868,18 +851,6 @@ namespace BakAPI.Migrations
 
             modelBuilder.Entity("BakAPI.Data.Game", b =>
                 {
-                    b.HasOne("BakAPI.Data.Duo", "DuoGre")
-                        .WithMany("GamesGre")
-                        .HasForeignKey("DuoGreId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("BakAPI.Data.Duo", "DuoRed")
-                        .WithMany("GamesRed")
-                        .HasForeignKey("DuoRedId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.HasOne("BakAPI.Data.Player", "GreDef")
                         .WithMany("GamesGreDef")
                         .HasForeignKey("GreDefId")
@@ -903,10 +874,6 @@ namespace BakAPI.Migrations
                         .HasForeignKey("RedOffId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-
-                    b.Navigation("DuoGre");
-
-                    b.Navigation("DuoRed");
 
                     b.Navigation("GreDef");
 
@@ -1014,13 +981,6 @@ namespace BakAPI.Migrations
             modelBuilder.Entity("BakAPI.Data.Country", b =>
                 {
                     b.Navigation("Hotels");
-                });
-
-            modelBuilder.Entity("BakAPI.Data.Duo", b =>
-                {
-                    b.Navigation("GamesGre");
-
-                    b.Navigation("GamesRed");
                 });
 
             modelBuilder.Entity("BakAPI.Data.Game", b =>

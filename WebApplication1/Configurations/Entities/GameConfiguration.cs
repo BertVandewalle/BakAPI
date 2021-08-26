@@ -19,6 +19,10 @@ namespace BakAPI.Configurations.Entities
             builder.HasOne<Player>(g => g.GreDef).WithMany(p => p.GamesGreDef).HasForeignKey(g => g.GreDefId).OnDelete(DeleteBehavior.Restrict);
             builder.HasOne<Player>(g => g.GreOff).WithMany(p => p.GamesGreOff).HasForeignKey(g => g.GreOffId).OnDelete(DeleteBehavior.Restrict);
 
+            builder.HasOne<Duo>(g => g.DuoRed).WithMany(p => p.GamesRed).HasForeignKey(g => g.DuoRedId).OnDelete(DeleteBehavior.Restrict);
+            builder.HasOne<Duo>(g => g.DuoGre).WithMany(p => p.GamesGre).HasForeignKey(g => g.DuoGreId).OnDelete(DeleteBehavior.Restrict);
+
+
 
         }
     }
