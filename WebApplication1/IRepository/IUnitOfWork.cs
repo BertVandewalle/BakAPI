@@ -8,8 +8,6 @@ namespace BakAPI.IRepository
 {
     public interface IUnitOfWork : IDisposable
     {
-        IGenericRepository<Country> Countries { get; }
-        IGenericRepository<Hotel> Hotels { get; }
         IGenericRepository<Player> Players { get; }
         IGenericRepository<Game> Games { get; }
         IGenericRepository<Rank> Ranks { get; }

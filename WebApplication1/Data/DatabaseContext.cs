@@ -15,8 +15,8 @@ namespace BakAPI.Data
         }
 
 
-        public DbSet<Country> Countries { get; set; }
-        public DbSet<Hotel> Hotels { get; set; }
+        //public DbSet<Country> Countries { get; set; }
+        //public DbSet<Hotel> Hotels { get; set; }
         public DbSet<Player> Players { get; set; }
         public DbSet<Game> Games { get; set; }
         public DbSet<Rank> Ranks { get; set; }
@@ -27,8 +27,8 @@ namespace BakAPI.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-            builder.ApplyConfiguration(new CountryConfiguration());
-            builder.ApplyConfiguration(new HotelConfiguration());
+            //builder.ApplyConfiguration(new CountryConfiguration());
+            //builder.ApplyConfiguration(new HotelConfiguration());
             builder.ApplyConfiguration(new GameConfiguration());
             builder.ApplyConfiguration(new RankConfiguration());
             builder.ApplyConfiguration(new GoalConfiguration());

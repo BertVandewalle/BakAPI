@@ -35,9 +35,7 @@ namespace BakAPI
         public void ConfigureServices(IServiceCollection services)
         {
 
-            //services.AddControllers();
 
-            //services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(Configuration.GetConnectionString("sqlConnection")));
             services.AddDbContext<DatabaseContext>(options => options.UseNpgsql(Configuration.GetConnectionString("postgresqlConnection")));
 
             services.AddMemoryCache();
@@ -65,7 +63,7 @@ namespace BakAPI
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebApplication1", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Bak API", Version = "v1" });
             }).AddSwaggerGenNewtonsoftSupport();
 
             services.AddControllers().AddNewtonsoftJson(op =>
@@ -83,7 +81,7 @@ namespace BakAPI
                 
             }
             app.UseSwagger();
-            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "WebApplication1 v1"));
+            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Bak API v1"));
 
             app.ConfigureExceptionHandler();
 

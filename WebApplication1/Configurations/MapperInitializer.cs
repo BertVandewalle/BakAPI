@@ -12,12 +12,6 @@ namespace BakAPI.Configurations
     {
         public MapperInitializer()
         {
-            CreateMap<Country, CountryDTO>().ReverseMap();
-            CreateMap<Country, CreateCountryDTO>().ReverseMap();
-            CreateMap<Country, UpdateCountryDTO>().ReverseMap();
-            CreateMap<Hotel, HotelDTO>().ReverseMap();
-            CreateMap<Hotel, CreateHotelDTO>().ReverseMap();
-            CreateMap<Hotel, UpdateHotelDTO>().ReverseMap();
             CreateMap<ApiUser, UserDTO>().ReverseMap();
             CreateMap<Player, PlayerDTO>().ReverseMap();
             CreateMap<Player, CreatePlayerDTO>().ReverseMap();
