@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31515.178
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BakAPI", "WebApplication1\BakAPI.csproj", "{F0385498-64A8-4261-828D-046A074969BA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BakAPI", "BakAPI\BakAPI.csproj", "{F0385498-64A8-4261-828D-046A074969BA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
