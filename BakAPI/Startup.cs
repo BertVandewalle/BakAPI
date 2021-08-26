@@ -36,11 +36,7 @@ namespace BakAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            string pgsqlDatabase = Environment.GetEnvironmentVariable("PGSQLDATABASE");
-            string pgsqlUser = Environment.GetEnvironmentVariable("PGSQLUSER");
-            string pgsqlPassword = Environment.GetEnvironmentVariable("PGSQLPASSWORD");
-            string pgsqlConnection = new ($"Host=localhost; database = {pgsqlDatabase}; Username={pgsqlUser}; Password = {pgsqlPassword};");
-            services.AddDbContext<DatabaseContext>(options => options.UseNpgsql(pgsqlConnection));
+            services.AddDbContext<DatabaseContext>(options => options.UseNpgsql(Configuration.GetConnectionString("DbContext")));
 
             services.AddMemoryCache();
 
