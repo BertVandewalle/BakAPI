@@ -25,7 +25,10 @@ namespace BakAPI.Services
         }
         public async Task<string> CreateToken()
         {
-            var signingCredentials = GetSigningCredentials();
+            var jwtSettings = _configuration.GetSection("Jwt");
+            var key = jwtSettings.GetSection("ServerSecret").Value;
+
+            var signingCredentials = GetSigningCredentials(key);
             var claims = await GetClaims();
             var token = GenerateTokenOptions(signingCredentials, claims);
 
@@ -62,9 +65,8 @@ namespace BakAPI.Services
             return claims;
         }
 
-        private static SigningCredentials GetSigningCredentials()
+        private static SigningCredentials GetSigningCredentials(string key)
         {
-            var key = Environment.GetEnvironmentVariable("KEY");
             var secret = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key));
 
             return new SigningCredentials(secret, SecurityAlgorithms.HmacSha256);

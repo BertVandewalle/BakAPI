@@ -95,7 +95,7 @@ namespace BakAPI
                 ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
             });
 
-            app.UseAuthentication();
+            //app.UseAuthentication();
 
             app.UseCors("AllowAll");
 
