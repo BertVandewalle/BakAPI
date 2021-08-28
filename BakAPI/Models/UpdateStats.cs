@@ -54,7 +54,7 @@ namespace BakAPI.Models
 
             // Elo per player
             double correctedWinRateRedDef = CorrectWinRate(RedDefPlayer.WinRate, RedDefPlayer.GameAmount);
-            double correctedWinRateRedOff= CorrectWinRate(RedOffPlayer.WinRate, RedOffPlayer.GameAmount);
+            double correctedWinRateRedOff = CorrectWinRate(RedOffPlayer.WinRate, RedOffPlayer.GameAmount);
             double correctedWinRateGreDef = CorrectWinRate(GreDefPlayer.WinRate, GreDefPlayer.GameAmount);
             double correctedWinRateGreOff = CorrectWinRate(GreOffPlayer.WinRate, GreOffPlayer.GameAmount);
 
@@ -142,14 +142,11 @@ namespace BakAPI.Models
             deltaEloGreDef += greBonus;
             deltaEloRedOff += greBonus;
 
-           
-
-
             RedDefPlayer.Elo += deltaEloRedDef;
             RedOffPlayer.Elo += deltaEloRedOff;
             GreDefPlayer.Elo += deltaEloGreDef;
             GreOffPlayer.Elo += deltaEloGreOff;
-
+        
             RedDefPlayer = await Initialize_PlayerStats(RedDefPlayer,_unitOfWork);
             RedOffPlayer = await Initialize_PlayerStats(RedOffPlayer,_unitOfWork);
             GreDefPlayer = await Initialize_PlayerStats(GreDefPlayer,_unitOfWork);
@@ -267,6 +264,9 @@ namespace BakAPI.Models
             var GamesRedOff = await _unitOfWork.Games.GetAll(g => g.RedOffId == _player.Id);
             var GamesGreDef = await _unitOfWork.Games.GetAll(g => g.GreDefId == _player.Id);
             var GamesGreOff = await _unitOfWork.Games.GetAll(g => g.GreOffId == _player.Id);
+
+            var rank = await _unitOfWork.Ranks.Get(q => q.LowerBound <= _player.Elo && q.UpperBound >= _player.Elo);
+            _player.RankId = rank.Id;
 
             //var GamesRedDef = _unitOfWork.Games()
             if (GamesRedDef != null)
