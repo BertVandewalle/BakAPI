@@ -48,56 +48,6 @@ namespace BakAPI.Controllers
             var results = _mapper.Map<PlayerDTO>(player);
             return Ok(results);
         }
-        //[HttpPost]
-        //[ProducesResponseType(StatusCodes.Status400BadRequest)]
-        //[ProducesResponseType(StatusCodes.Status201Created)]
-        //[ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        //public async Task<IActionResult> CreatePlayer([FromBody] CreatePlayerDTO playerDTO)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        _logger.LogError($"Invalid POST attempt in {nameof(CreatePlayer)}");
-        //        return BadRequest(ModelState);
-        //    }
-        //    var player = _mapper.Map<Player>(playerDTO);
-
-        //    UpdateRank
-        //    var rank = await _unitOfWork.Ranks.Get(q => q.LowerBound <= player.Elo && q.UpperBound >= player.Elo);
-        //    player.RankId = rank.Id;
-
-        //    var otherPlayers = await _unitOfWork.Players.GetAll();
-
-        //    await _unitOfWork.Players.Insert(player);
-        //    await _unitOfWork.Save();
-
-        //    Add duos
-
-        //    foreach (var otherPlayer in otherPlayers)
-        //    {
-        //        var duoDef = new Duo
-        //        {
-        //            DefPlayerId = player.Id,
-        //            OffPlayerId = otherPlayer.Id
-        //        };
-        //        await _unitOfWork.Duos.Insert(duoDef);
-        //        var duoOff = new Duo
-        //        {
-        //            DefPlayerId = player.Id,
-        //            OffPlayerId = otherPlayer.Id
-        //        };
-        //        await _unitOfWork.Duos.Insert(duoOff);
-        //    }
-        //    Duo with itself (for 2v1 or 1v1 games)
-        //    var duo = new Duo
-        //    {
-        //        DefPlayerId = player.Id,
-        //        OffPlayerId = player.Id
-        //    };
-        //    await _unitOfWork.Duos.Insert(duo);
-
-        //    await _unitOfWork.Save();
-        //    return CreatedAtRoute("GetPlayer", new { id = player.Id }, player);
-        //}
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -139,40 +89,40 @@ namespace BakAPI.Controllers
                 await _unitOfWork.Duos.Insert(duoOff);
             }
             //Duo with itself(for 2v1 or 1v1 games)
-                var duo = new Duo
-                {
-                    DefPlayerId = player.Id,
-                    OffPlayerId = player.Id
-                };
+            var duo = new Duo
+            {
+                DefPlayerId = player.Id,
+                OffPlayerId = player.Id
+            };
             await _unitOfWork.Duos.Insert(duo);
 
             await _unitOfWork.Save();
             return CreatedAtRoute("GetPlayer", new { id = player.Id }, player);
         }
 
-        [HttpPatch("{id:int}")]
-        public async Task<IActionResult> JsonPatchPlayer(int id, [FromBody] JsonPatchDocument<Player> patch)
-        {
-            if (!ModelState.IsValid)
-            {
-                _logger.LogError($"Invalid PATCH attempt in {nameof(JsonPatchPlayer)}");
-                return BadRequest(ModelState);
-            }
-            var player = await _unitOfWork.Players.Get(q => q.Id == id);
-            if(player == null)
-            {
-                return NotFound();
-            }
-            patch.ApplyTo(player);
-            //UpdateRank
-            var rank = await _unitOfWork.Ranks.Get(q => q.LowerBound <= player.Elo && q.UpperBound >= player.Elo);
-            player.RankId = rank.Id;
+        //[HttpPatch("{id:int}")]
+        //public async Task<IActionResult> JsonPatchPlayer(int id, [FromBody] JsonPatchDocument<Player> patch)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        _logger.LogError($"Invalid PATCH attempt in {nameof(JsonPatchPlayer)}");
+        //        return BadRequest(ModelState);
+        //    }
+        //    var player = await _unitOfWork.Players.Get(q => q.Id == id);
+        //    if (player == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    patch.ApplyTo(player);
+        //    //UpdateRank
+        //    var rank = await _unitOfWork.Ranks.Get(q => q.LowerBound <= player.Elo && q.UpperBound >= player.Elo);
+        //    player.RankId = rank.Id;
 
-            _unitOfWork.Players.Update(player);
-            await _unitOfWork.Save();
+        //    _unitOfWork.Players.Update(player);
+        //    await _unitOfWork.Save();
 
-            return NoContent();
-        }
+        //    return NoContent();
+        //}
 
         [HttpDelete]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -195,9 +145,30 @@ namespace BakAPI.Controllers
             return NoContent();
         }
 
+        [HttpDelete("{id:int}")]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> DeletePlayer(int id)
+        {
+            if (id < 1)
+            {
+                _logger.LogError($"Invalid UPDATE attempt in {nameof(DeletePlayer)}");
+                return BadRequest();
+            }
+
+            var player = await _unitOfWork.Players.Get(q => q.Id == id);
+            if (player == null)
+            {
+                _logger.LogError($"Invalid UPDATE attempt in {nameof(DeletePlayer)}");
+                return BadRequest("Submitted data is invalid");
+            }
+            await _unitOfWork.Players.Delete(id);
+            await _unitOfWork.Save();
+            return NoContent();
 
 
-
+        }
     }
 
 }
