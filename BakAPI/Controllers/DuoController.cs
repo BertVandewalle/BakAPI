@@ -29,9 +29,9 @@ namespace BakAPI.Controllers
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> GetDuos([FromQuery] RequestParams requestParams)
+        public async Task<IActionResult> GetDuos()
         {
-            var duos = await _unitOfWork.Duos.GetPaged(requestParams);
+            var duos = await _unitOfWork.Duos.GetAll();
             var results = _mapper.Map<IList<DuoDTO>>(duos);
             return Ok(results);
         }
@@ -45,22 +45,22 @@ namespace BakAPI.Controllers
             var results = _mapper.Map<DuoDTO>(duo);
             return Ok(results);
         }
-        [HttpPost]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status201Created)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> CreateDuo([FromBody] DuoDTO duoDTO)
-        {
-            if (!ModelState.IsValid)
-            {
-                _logger.LogError($"Invalid POST attempt in {nameof(CreateDuo)}");
-                return BadRequest(ModelState);
-            }
-            var duo = _mapper.Map<Duo>(duoDTO);
-            await _unitOfWork.Duos.Insert(duo);
-            await _unitOfWork.Save();
+        //[HttpPost]
+        //[ProducesResponseType(StatusCodes.Status400BadRequest)]
+        //[ProducesResponseType(StatusCodes.Status201Created)]
+        //[ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        //public async Task<IActionResult> CreateDuo([FromBody] DuoDTO duoDTO)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        _logger.LogError($"Invalid POST attempt in {nameof(CreateDuo)}");
+        //        return BadRequest(ModelState);
+        //    }
+        //    var duo = _mapper.Map<Duo>(duoDTO);
+        //    await _unitOfWork.Duos.Insert(duo);
+        //    await _unitOfWork.Save();
 
-            return CreatedAtRoute("GetDuo", new { id = duo.Id }, duo);
-        }
+        //    return CreatedAtRoute("GetDuo", new { id = duo.Id }, duo);
+        //}
     }
 }
