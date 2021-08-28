@@ -80,30 +80,30 @@ namespace BakAPI.Controllers
             return Ok(new List<object> { game.Id, deltaElo });
         }
 
-        [HttpPut("{id:int}")]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> UpdateGame(int id, [FromBody] UpdateGameDTO gameDTO)
-        {
-            if (!ModelState.IsValid || id < 1)
-            {
-                _logger.LogError($"Invalid UPDATE attempt in {nameof(UpdateGame)}");
-                return BadRequest(ModelState);
-            }
+        //[HttpPut("{id:int}")]
+        //[ProducesResponseType(StatusCodes.Status400BadRequest)]
+        //[ProducesResponseType(StatusCodes.Status204NoContent)]
+        //[ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        //public async Task<IActionResult> UpdateGame(int id, [FromBody] UpdateGameDTO gameDTO)
+        //{
+        //    if (!ModelState.IsValid || id < 1)
+        //    {
+        //        _logger.LogError($"Invalid UPDATE attempt in {nameof(UpdateGame)}");
+        //        return BadRequest(ModelState);
+        //    }
 
-            var game = await _unitOfWork.Games.Get(q => q.Id == id);
-            if (game == null)
-            {
-                return BadRequest("Submitted data is invalid");
-            }
-            gameDTO.RedScore = gameDTO.RedDefScore + gameDTO.RedOffScore;
-            _mapper.Map(gameDTO, game);
-            _unitOfWork.Games.Update(game);
-            await _unitOfWork.Save();
+        //    var game = await _unitOfWork.Games.Get(q => q.Id == id);
+        //    if (game == null)
+        //    {
+        //        return BadRequest("Submitted data is invalid");
+        //    }
+        //    gameDTO.RedScore = gameDTO.RedDefScore + gameDTO.RedOffScore;
+        //    _mapper.Map(gameDTO, game);
+        //    _unitOfWork.Games.Update(game);
+        //    await _unitOfWork.Save();
 
-            return NoContent();
-        }
+        //    return NoContent();
+        //}
         [HttpDelete("{id:int}")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
