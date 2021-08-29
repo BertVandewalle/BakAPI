@@ -31,7 +31,7 @@ namespace BakAPI.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetGames([FromQuery] RequestParams requestParams)
         {
-            var games = await _unitOfWork.Games.GetPaged(requestParams);
+            var games = await _unitOfWork.Games.GetPaged(requestParams, q => q.OrderByDescending(g => g.StartDateTime));
             var results = _mapper.Map<IList<GameDTO>>(games);
             return Ok(results);
         }
@@ -146,6 +146,8 @@ namespace BakAPI.Controllers
             await _unitOfWork.Save();
             return NoContent();
         }
+
+
 
     }
 

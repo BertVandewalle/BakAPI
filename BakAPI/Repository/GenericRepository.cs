@@ -77,7 +77,7 @@ namespace BakAPI.Repository
 
         }
 
-        public async Task<IPagedList<T>> GetPaged(RequestParams requestParams,List<string> includes = null)
+        public async Task<IPagedList<T>> GetPaged(RequestParams requestParams, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, List<string> includes = null)
         {
             IQueryable<T> query = _db;
 
@@ -88,6 +88,11 @@ namespace BakAPI.Repository
                     query = query.Include(includeProperty);
                 }
             }
+            if (orderBy != null)
+            {
+                query = orderBy(query);
+            }
+
             return await query.AsNoTracking().ToPagedListAsync(requestParams.PageNumber,requestParams.PageSize);
         }
 
