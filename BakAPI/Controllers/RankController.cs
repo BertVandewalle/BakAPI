@@ -30,9 +30,9 @@ namespace BakAPI.Controllers
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> GetRanks([FromQuery] RequestParams requestParams)
+        public async Task<IActionResult> GetRanks()
         {
-            var players = await _unitOfWork.Ranks.GetPaged(requestParams);
+            var players = await _unitOfWork.Ranks.GetAll();
             var results = _mapper.Map<IList<RankDTO>>(players);
             return Ok(results);
         }
