@@ -36,6 +36,11 @@ namespace BakAPI.Models
         public int DuoRedId { get; set; }
         public int DuoGreId { get; set; }
 
+        public double RedDefDeltaElo { get; set; }
+        public double RedOffDeltaElo { get; set; }
+        public double GreDefDeltaElo { get; set; }
+        public double GreOffDeltaElo { get; set; }
+
 
     }
     public class GameDTO : CreateGameDTO

@@ -16,6 +16,7 @@ namespace BakAPI.Data
         public Player RedDef { get; set; }
         public int RedDefScore { get; set; }
 
+
         public int RedOffId { get; set; }
         public Player RedOff { get; set; }
         public int RedOffScore { get; set; }
@@ -39,6 +40,11 @@ namespace BakAPI.Data
         public Duo DuoRed { get; set; }
         public int DuoGreId { get; set; }
         public Duo DuoGre { get; set; }
+
+        public double RedDefDeltaElo { get; set; }
+        public double RedOffDeltaElo { get; set; }
+        public double GreDefDeltaElo { get; set; }
+        public double GreOffDeltaElo { get; set; }
 
         public virtual ICollection<Player> Players { get; set; }
         public virtual ICollection<Goal> Goals { get; set; }

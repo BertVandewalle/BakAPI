@@ -177,6 +177,13 @@ namespace BakAPI.Models
             _unitOfWork.Duos.Update(DuoGre);
             _logger.LogInformation("Saving second duo");
 
+            game.RedDefDeltaElo = deltaEloRedDef;
+            game.RedOffDeltaElo = deltaEloRedOff;
+            game.GreOffDeltaElo = deltaEloGreOff;
+            game.GreDefDeltaElo = deltaEloGreDef;
+
+            _unitOfWork.Games.Update(game);
+
             await _unitOfWork.Save();
             return new double[4] { deltaEloRedDef, deltaEloRedOff, deltaEloGreDef, deltaEloGreOff };
 
