@@ -45,6 +45,21 @@ namespace BakAPI.Controllers
             var results = _mapper.Map<GameDTO>(game);
             return Ok(results);
         }
+
+        [HttpGet("Today")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> GetGamesToday()
+        {
+            var currentDateTimeUtc = DateTime.UtcNow;
+            var yesterDayDateTimeUtc = currentDateTimeUtc.AddDays(-1);
+            var gamesToday = await _unitOfWork.Games.GetAll(q => q.StartDateTime>=yesterDayDateTimeUtc, q => q.OrderBy(g => g.StartDateTime));
+            var results = _mapper.Map<IList<GameDTO>>(gamesToday);
+            return Ok(results);
+        }
+
+        
+
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         //[ProducesResponseType(StatusCodes.Status201Created)]
@@ -79,6 +94,8 @@ namespace BakAPI.Controllers
             //return CreatedAtRoute("GetGame", new { id = game.Id }, new List<object> { game.Id, deltaElo });
             return Ok(new List<object> { game.Id, deltaElo });
         }
+
+
 
         //[HttpPut("{id:int}")]
         //[ProducesResponseType(StatusCodes.Status400BadRequest)]
