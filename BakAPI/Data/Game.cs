@@ -41,6 +41,19 @@ namespace BakAPI.Data
         public int DuoGreId { get; set; }
         public Duo DuoGre { get; set; }
 
+        public double EloRedDefBase { get; set; }
+        public double EloRedOffBase { get; set; }
+        public double EloGreDefBase { get; set; }
+        public double EloGreOffBase { get; set; }
+
+        public double EloRedDefBonus { get; set; }
+        public double EloRedOffBonus { get; set; }
+        public double EloGreDefBonus { get; set; }
+        public double EloGreOffBonus { get; set; }
+
+        public double EloRedTeamBonus { get; set; }
+        public double EloGreTeamBonus { get; set; }
+
         public double RedDefDeltaElo { get; set; }
         public double RedOffDeltaElo { get; set; }
         public double GreDefDeltaElo { get; set; }

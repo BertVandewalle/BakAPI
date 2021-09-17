@@ -68,6 +68,11 @@ namespace BakAPI.Models
             double deltaEloGreDef = deltaEloGre * (1 + 0.5 - WinChanceGreDef);
             double deltaEloGreOff = deltaEloGre * (1 + 0.5 - WinChanceGreOff);
 
+            game.EloRedDefBase = deltaEloRedDef;
+            game.EloRedOffBase = deltaEloRedOff;
+            game.EloGreDefBase = deltaEloGreDef;
+            game.EloGreOffBase = deltaEloGreOff;
+
             // Individual Bonus
             int[] scores = { _game.RedScore, _game.GreScore };
             double normalizedGoalsRedDef = _game.RedDefScore * 11 / scores.Max();
@@ -83,39 +88,44 @@ namespace BakAPI.Models
             double diffGreDef = normalizedGoalsGreDef - averageGoalsDef;
             double diffGreOff = normalizedGoalsGreOff - averageGoalsOff;
 
+            double redDefBonus = 0.0;
+            double redOffBonus = 0.0;
+            double greDefBonus = 0.0;
+            double greOffBonus = 0.0;
+
             // RedOff
-            if (diffRedOff > 0) deltaEloRedOff += diffRedOff * 3 - diffGreDef * 4 - diffGreOff * 2;
-            else deltaEloRedOff += diffRedOff * 3 - diffGreDef * 4 - diffGreOff * 2;
+            if (diffRedOff > 0) redDefBonus += diffRedOff * 3 - diffGreDef * 4 - diffGreOff * 2;
+            else redDefBonus += diffRedOff * 3 - diffGreDef * 4 - diffGreOff * 2;
 
             // GreOff
-            if (diffGreOff > 0) deltaEloGreOff += diffGreOff * 3 - diffRedDef * 4 - diffRedOff * 2;
-            else deltaEloGreOff += diffGreOff * 3 - diffRedDef * 4 - diffRedOff * 2;
+            if (diffGreOff > 0) greOffBonus += diffGreOff * 3 - diffRedDef * 4 - diffRedOff * 2;
+            else greOffBonus += diffGreOff * 3 - diffRedDef * 4 - diffRedOff * 2;
 
             // RedDef
             if (diffRedDef > 0)
             {
-                deltaEloRedDef += diffRedDef * 5;
+                redDefBonus += diffRedDef * 5;
             }
             if (diffGreOff < 0)
             {
-                deltaEloRedDef -= diffGreOff * 5;
+                redDefBonus -= diffGreOff * 5;
             }
             if (diffRedOff > 0)
             {
-                deltaEloRedDef += diffRedOff * 2;
+                redDefBonus += diffRedOff * 2;
             }
             // GreDef
             if (diffGreDef > 0)
             {
-                deltaEloGreDef += diffGreDef * 5;
+                greDefBonus += diffGreDef * 5;
             }
             if (diffRedOff < 0)
             {
-                deltaEloGreDef -= diffRedOff * 5;
+                greDefBonus -= diffRedOff * 5;
             }
             if (diffGreOff > 0)
             {
-                deltaEloGreDef += diffGreOff * 2;
+                greDefBonus += diffGreOff * 2;
             }
 
             // TeamBonus
@@ -137,10 +147,18 @@ namespace BakAPI.Models
             else if (_game.RedScore == 0) greBonus += 50;
             else if (_game.RedScore < 3.5) greBonus += 5;
 
-            deltaEloRedDef += redBonus;
-            deltaEloRedOff += redBonus;
-            deltaEloGreDef += greBonus;
-            deltaEloRedOff += greBonus;
+            game.EloRedDefBonus = redDefBonus;
+            game.EloRedOffBonus = redOffBonus;
+            game.EloGreDefBonus = greDefBonus;
+            game.EloGreOffBonus = greOffBonus;
+
+            game.EloRedTeamBonus = redBonus;
+            game.EloGreTeamBonus = greBonus;
+
+            deltaEloRedDef += redBonus + redDefBonus;
+            deltaEloRedOff += redBonus + redOffBonus;
+            deltaEloGreDef += greBonus + greDefBonus;
+            deltaEloRedOff += greBonus + greOffBonus;
 
             RedDefPlayer.Elo += deltaEloRedDef;
             RedOffPlayer.Elo += deltaEloRedOff;
